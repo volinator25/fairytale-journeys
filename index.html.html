@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fairytale Journeys by Joseph</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #FFD700;
+      --deep-blue: #1a237e;
+      --sky: #42a5f5;
+      --pink: #f48fb1;
+      --purple: #9c4dcc;
+      --teal: #00bcd4;
+      --orange: #ff7043;
+      --cream: #fffde7;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ── STARS BACKGROUND ── */
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: twinkle 3s infinite alternate;
+      opacity: 0;
+    }
+    @keyframes twinkle {
+      0%   { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(90deg, var(--deep-blue), var(--purple), var(--deep-blue));
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      font-family: 'Pacifico', cursive;
+      color: var(--gold);
+      font-size: 1.5rem;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(160deg, #1a237e 0%, #6a1b9a 40%, #0288d1 80%, #00bcd4 100%);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* floating shapes */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.12;
+      animation: float 8s ease-in-out infinite;
+    }
+    .bubble:nth-child(1) { width:300px;height:300px;background:var(--gold);top:-80px;left:-80px;animation-delay:0s; }
+    .bubble:nth-child(2) { width:200px;height:200px;background:var(--pink);bottom:50px;right:-60px;animation-delay:2s; }
+    .bubble:nth-child(3) { width:150px;height:150px;background:var(--teal);top:30%;left:5%;animation-delay:4s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-castle {
+      font-size: 5rem;
+      margin-bottom: 10px;
+      animation: bounceIn 0.8s ease;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+    }
+    @keyframes bounceIn {
+      0%   { transform: scale(0.5) translateY(40px); opacity: 0; }
+      70%  { transform: scale(1.1) translateY(-10px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); }
+    }
+
+    .hero h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      color: var(--gold);
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.4), 0 0 40px rgba(255,215,0,0.4);
+      line-height: 1.15;
+      margin-bottom: 12px;
+      animation: fadeUp 0.9s 0.2s both;
+    }
+    .hero p.tagline {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: rgba(255,255,255,0.92);
+      max-width: 600px;
+      font-weight: 700;
+      margin-bottom: 36px;
+      animation: fadeUp 0.9s 0.4s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.9s 0.6s both;
+    }
+    .btn {
+      padding: 14px 34px;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #ffab00);
+      color: var(--deep-blue);
+      box-shadow: 0 4px 15px rgba(255,215,0,0.5);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 3px solid rgba(255,255,255,0.7);
+    }
+
+    /* wand sparkle */
+    .sparkle-row {
+      display: flex; gap: 8px; margin-top: 40px;
+      animation: fadeUp 0.9s 0.8s both;
+    }
+    .sparkle-row span { font-size: 1.6rem; animation: spin 4s linear infinite; }
+    .sparkle-row span:nth-child(2) { animation-delay: 0.5s; }
+    .sparkle-row span:nth-child(3) { animation-delay: 1s; }
+    @keyframes spin {
+      0%,100% { transform: rotate(0deg) scale(1); }
+      50%      { transform: rotate(20deg) scale(1.3); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .section-title {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 640px;
+      margin: 0 auto 50px;
+      font-weight: 600;
+    }
+    .divider {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      letter-spacing: 6px;
+    }
+
+    /* ── WHY ME ── */
+    .why-section { background: var(--white); }
+    .why-section .section-title { color: var(--purple); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 3px solid transparent;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .card:nth-child(1):hover { border-color: var(--gold); }
+    .card:nth-child(2):hover { border-color: var(--pink); }
+    .card:nth-child(3):hover { border-color: var(--teal); }
+    .card:nth-child(4):hover { border-color: var(--orange); }
+    .card-icon { font-size: 3rem; margin-bottom: 14px; }
+    .card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: var(--deep-blue); }
+    .card p { font-size: 0.93rem; color: #666; line-height: 1.6; }
+
+    /* ── DESTINATIONS ── */
+    .dest-section {
+      background: linear-gradient(135deg, #e3f2fd, #fce4ec, #f3e5f5);
+    }
+    .dest-section .section-title { color: var(--deep-blue); }
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+    .dest-card {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .dest-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+    .dest-banner {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+    .dest-banner-wdw   { background: linear-gradient(135deg, #1565c0, #283593); }
+    .dest-banner-dcl   { background: linear-gradient(135deg, #0288d1, #006064); }
+    .dest-banner-uni   { background: linear-gradient(135deg, #6a1b9a, #4a148c); }
+    .dest-banner-dl    { background: linear-gradient(135deg, #e65100, #bf360c); }
+    .dest-body { background: var(--white); padding: 22px 24px; }
+    .dest-body h3 { font-size: 1.2rem; font-weight: 800; color: var(--deep-blue); margin-bottom: 6px; }
+    .dest-body p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+    .dest-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .tag-blue   { background: #e3f2fd; color: #1565c0; }
+    .tag-teal   { background: #e0f7fa; color: #006064; }
+    .tag-purple { background: #f3e5f5; color: #6a1b9a; }
+    .tag-orange { background: #fbe9e7; color: #bf360c; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--white); }
+    .how-section .section-title { color: var(--orange); }
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      justify-content: center;
+      position: relative;
+    }
+    .step {
+      flex: 1;
+      min-width: 200px;
+      max-width: 220px;
+      text-align: center;
+      padding: 20px 16px;
+      position: relative;
+    }
+    .step-num {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.6rem;
+      color: white;
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .sn1 { background: linear-gradient(135deg, var(--gold), #ffab00); color: var(--deep-blue) !important; }
+    .sn2 { background: linear-gradient(135deg, var(--pink), #e91e63); }
+    .sn3 { background: linear-gradient(135deg, var(--teal), #00838f); }
+    .sn4 { background: linear-gradient(135deg, var(--purple), #6a1b9a); }
+    .sn5 { background: linear-gradient(135deg, var(--orange), #bf360c); }
+    .step h3 { font-size: 1rem; font-weight: 800; color: var(--deep-blue); margin-bottom: 6px; }
+    .step p  { font-size: 0.87rem; color: #666; line-height: 1.55; }
+    .arrow-sep {
+      align-self: center;
+      font-size: 1.8rem;
+      color: var(--gold);
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .test-section {
+      background: linear-gradient(135deg, var(--deep-blue), var(--purple));
+    }
+    .test-section .section-title { color: var(--gold); }
+    .test-section .section-sub   { color: rgba(255,255,255,0.7); }
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .testimonial {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 28px 24px;
+      transition: transform 0.25s;
+    }
+    .testimonial:hover { transform: translateY(-6px); }
+    .stars-row { color: var(--gold); font-size: 1.2rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial p { color: rgba(255,255,255,0.9); font-size: 0.95rem; line-height: 1.7; font-style: italic; margin-bottom: 16px; }
+    .testimonial-name { color: var(--gold); font-weight: 800; font-size: 0.9rem; }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: linear-gradient(135deg, #fffde7, #fce4ec, #e3f2fd);
+    }
+    .contact-section .section-title { color: var(--purple); }
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem;
+      color: var(--deep-blue);
+      margin-bottom: 16px;
+    }
+    .contact-info p { color: #555; font-size: 1rem; line-height: 1.8; margin-bottom: 24px; }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 0.97rem;
+      color: #444;
+      font-weight: 600;
+    }
+    .contact-detail span:first-child { font-size: 1.5rem; }
+    .contact-form {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 36px 32px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+      color: var(--deep-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.97rem;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fafafa;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--purple); background: white; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--purple), var(--deep-blue));
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .form-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(106,27,154,0.4);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d0d2b;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 1;
+    }
+    footer .footer-logo {
+      font-family: 'Pacifico', cursive;
+      color: var(--gold);
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+    footer p { font-size: 0.88rem; margin-bottom: 6px; }
+    footer .footer-emojis { font-size: 1.5rem; letter-spacing: 8px; margin: 16px 0; }
+    footer .disclaimer {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      max-width: 600px;
+      margin: 12px auto 0;
+      line-height: 1.6;
+    }
+
+    /* ── FLOATING CTA BUBBLE ── */
+    .float-cta {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      background: linear-gradient(135deg, var(--gold), #ffab00);
+      color: var(--deep-blue);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 14px 20px;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(255,215,0,0.5);
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: pulse 2.5s infinite;
+      border: none;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 8px 25px rgba(255,215,0,0.5); }
+      50%      { box-shadow: 0 8px 40px rgba(255,215,0,0.85); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 12px 20px; }
+      .nav-links { gap: 16px; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .steps { flex-direction: column; align-items: center; }
+      .arrow-sep { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Twinkling stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Floating CTA -->
+<a href="#contact" class="float-cta">✨ Plan My Trip!</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">✨ FJ</div>
+  <ul class="nav-links">
+    <li><a href="#why">Why Joseph</a></li>
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="hero-castle">🏰</div>
+  <h1>Fairytale Journeys<br>by Joseph</h1>
+  <p class="tagline">Your Certified Disney & Universal Travel Advisor — making magical vacations stress-free, personalized, and unforgettable!</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn btn-primary">🌟 Start Planning</a>
+    <a href="#destinations" class="btn btn-secondary">Explore Destinations</a>
+  </div>
+  <div class="sparkle-row">
+    <span>⭐</span><span>✨</span><span>🌟</span><span>✨</span><span>⭐</span>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why-section" id="why">
+  <div class="section-inner">
+    <div class="divider">🌟✨🌟</div>
+    <h2 class="section-title">Why Book With Joseph?</h2>
+    <p class="section-sub">Planning a Disney or Universal trip is complicated. Let a pro handle every detail so you can focus on the magic!</p>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>Certified Expert</h3>
+        <p>Trained and certified in all things Disney & Universal — parks, cruises, resorts, and beyond.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💸</div>
+        <h3>100% Free Service</h3>
+        <p>My planning services cost you nothing — I'm paid by the parks so you get expert help at no charge.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗓️</div>
+        <h3>Custom Itineraries</h3>
+        <p>Tailored day-by-day plans that match your family's pace, interests, and budget perfectly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📞</div>
+        <h3>Dedicated Support</h3>
+        <p>I'm with you from booking through your return home — available for every question along the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="dest-section" id="destinations">
+  <div class="section-inner">
+    <div class="divider">🎠🎡🎢</div>
+    <h2 class="section-title">Magical Destinations</h2>
+    <p class="section-sub">From fairy tale castles to wizarding worlds, I specialize in the most magical theme park destinations on earth.</p>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <div class="dest-banner dest-banner-wdw">🏰</div>
+        <div class="dest-body">
+          <h3>Walt Disney World</h3>
+          <p>The most magical place on earth — 4 theme parks, 2 water parks, Disney Springs, and 30+ resort hotels. Let me unlock every secret!</p>
+          <span class="dest-tag tag-blue">Orlando, FL</span>
+        </div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-banner dest-banner-dcl">🚢</div>
+        <div class="dest-body">
+          <h3>Disney Cruise Line</h3>
+          <p>Sail to the Bahamas, Caribbean, Alaska, and Europe with world-class dining, Broadway entertainment, and Castaway Cay.</p>
+          <span class="dest-tag tag-teal">Multiple Ports</span>
+        </div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-banner dest-banner-uni">⚡</div>
+        <div class="dest-body">
+          <h3>Universal Orlando</h3>
+          <p>Epic Universe, Wizarding World of Harry Potter, Jurassic World, and more thrills for the whole family at Universal Studios.</p>
+          <span class="dest-tag tag-purple">Orlando, FL</span>
+        </div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-banner dest-banner-dl">🌅</div>
+        <div class="dest-body">
+          <h3>Disneyland Resort</h3>
+          <p>The original magic kingdom in sunny Anaheim — a more intimate park experience with all the Disney charm you love.</p>
+          <span class="dest-tag tag-orange">Anaheim, CA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-inner">
+    <div class="divider">✨🪄✨</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">From your first message to your first step through the park gates — here's the magic behind the process.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num sn1">1</div>
+        <h3>Tell Me Your Dream</h3>
+        <p>Fill out my quick form with your dates, group size, budget, and dream destinations.</p>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="step">
+        <div class="step-num sn2">2</div>
+        <h3>Free Consultation</h3>
+        <p>We chat about your trip goals and I put together a personalized plan and quote.</p>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="step">
+        <div class="step-num sn3">3</div>
+        <h3>I Handle Everything</h3>
+        <p>Hotels, dining reservations, Lightning Lanes, tickets — I book it all for you!</p>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="step">
+        <div class="step-num sn4">4</div>
+        <h3>Your Itinerary</h3>
+        <p>Get a custom day-by-day guide packed with tips, maps, and must-dos.</p>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="step">
+        <div class="step-num sn5">5</div>
+        <h3>Enjoy the Magic!</h3>
+        <p>Arrive stress-free with me on standby throughout your entire vacation. 🎉</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="test-section" id="reviews">
+  <div class="section-inner">
+    <div class="divider" style="color:var(--gold)">⭐⭐⭐⭐⭐</div>
+    <h2 class="section-title">Happy Families</h2>
+    <p class="section-sub">Don't just take my word for it — here's what families are saying!</p>
+    <div class="test-grid">
+      <div class="testimonial">
+        <div class="stars-row">★★★★★</div>
+        <p>"Joseph made our first Disney trip absolutely perfect. He thought of everything — dining reservations, the best parade spots, even which days to visit each park. Our kids still talk about it!"</p>
+        <div class="testimonial-name">— The Martinez Family 🐭</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars-row">★★★★★</div>
+        <p>"I had no idea how complicated Disney World was until Joseph showed me. His custom itinerary saved us hours of wait time and we hit every single ride on our list. Truly magical!"</p>
+        <div class="testimonial-name">— Sarah & Family 🏰</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars-row">★★★★★</div>
+        <p>"We did a Disney Cruise and it was beyond our expectations. Joseph handled every detail from port excursions to character dining. 10/10 would book with him again!"</p>
+        <div class="testimonial-name">— The Johnson Crew 🚢</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-inner">
+    <div class="divider">💌✨💌</div>
+    <h2 class="section-title">Let's Plan Your Magic!</h2>
+    <p class="section-sub">Ready to start? Fill out the form and I'll be in touch within 24 hours to begin crafting your dream vacation.</p>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>Get In Touch 👋</h3>
+        <p>No dream is too big or too small — whether it's a quick weekend at Disneyland or a 14-night Disney cruise, I'm here to make it happen!</p>
+        <div class="contact-detail"><span>✉️</span><span>ftjbyjoseph@gmail.com</span></div>
+        <div class="contact-detail"><span>📱</span><span>Available via email & message</span></div>
+        <div class="contact-detail"><span>🕐</span><span>Response within 24 hours</span></div>
+        <div class="contact-detail"><span>💸</span><span>Planning is always FREE</span></div>
+        <div class="contact-detail"><span>📍</span><span>Maryville, TN — Serving Clients Nationwide</span></div>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/xbdzyjey" method="POST">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" placeholder="First & Last Name" required />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="your@email.com" required />
+        </div>
+        <div class="form-group">
+          <label>Dream Destination</label>
+          <select name="destination">
+            <option value="">— Select One —</option>
+            <option>Walt Disney World</option>
+            <option>Disney Cruise Line</option>
+            <option>Universal Orlando</option>
+            <option>Disneyland Resort</option>
+            <option>Multiple Destinations</option>
+            <option>Not Sure Yet!</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estimated Travel Dates</label>
+          <input type="text" name="travel_dates" placeholder="e.g. Summer 2025 or July 4–11" />
+        </div>
+        <div class="form-group">
+          <label>Tell Me About Your Trip!</label>
+          <textarea name="message" placeholder="Group size, ages of kids, special occasions, budget range, must-dos — anything helps!"></textarea>
+        </div>
+        <button type="submit" class="form-submit">✨ Send My Request!</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">✨ Fairytale Journeys by Joseph</div>
+  <div class="footer-emojis">🏰🚢⚡🌟</div>
+  <p>Your Authorized Disney & Universal Vacation Planner</p>
+  <p>Maryville, TN · Serving Families Nationwide</p>
+  <p class="disclaimer">Fairytale Journeys by Joseph is an independent travel agency. Disney, Universal, and all related names and trademarks are property of their respective owners. This site is not affiliated with or endorsed by The Walt Disney Company or Universal Studios.</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Generate twinkling stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `
+      left: ${Math.random()*100}%;
+      top: ${Math.random()*100}%;
+      animation-delay: ${Math.random()*5}s;
+      animation-duration: ${2 + Math.random()*4}s;
+      width: ${2+Math.random()*4}px;
+      height: ${2+Math.random()*4}px;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Form submit feedback
+  document.querySelector('.form-s
